@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class PlayerControls : MonoBehaviour
 {
-    [SerializeField] float controlSpeed= 15f; 
-    [SerializeField] float Xrange = 16f; // ekran sýnýr
+    [SerializeField] float controlSpeed= 35f; 
+    [SerializeField] float Xrange = 25f; // ekran sýnýr
     [SerializeField] float Yrange = 12f; // ekran sýnýr
 
-    [SerializeField] float positionPitchFactor= -2f; // X ekseni 
-    [SerializeField] float controlPitchFactor = -3f; // 
-    [SerializeField] float positionYawFactor; //  Y ekseni
+    [SerializeField] float positionPitchFactor= -1.5f; // X ekseni 
+    [SerializeField] float controlPitchFactor = -1.5f; // 
+    [SerializeField] float positionYawFactor = 1f; //  Y ekseni
     [SerializeField] float controlRollFactor = 20f; //  Z ekseni
     float yThrow;
     float xThrow;
@@ -26,11 +26,11 @@ public class PlayerControls : MonoBehaviour
         float pitchDueToPosition = transform.localPosition.y * positionPitchFactor; //yukarý aþaðý rotation Y
         float pitchDueToControlThrow = yThrow * controlPitchFactor;
 
-        float pitch = pitchDueToControlThrow  *pitchDueToPosition ;
+        float pitch = pitchDueToControlThrow  *pitchDueToPosition ; // x ekseni 
 
         float yaw = transform.localPosition.x * positionYawFactor; // sað sol rotation X
         float roll = xThrow * controlRollFactor;
-        transform.localRotation = Quaternion.Euler(pitch, yaw , roll); // açý berlirleme 
+        transform.localRotation = Quaternion.Euler(pitch, yaw , roll); // açý berlirleme  X Y Z 
     }
 
     void processTransition()
