@@ -1,16 +1,31 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;  // scene de iþlem varsa kullanýlýyor.
 
 public class CollisionHandler : MonoBehaviour
 {
-     void OnCollisionEnter(Collision other)
+
+    [SerializeField] float loadDelay = 1f;
+    [SerializeField] ParticleSystem crashVFX;
+
+    void OnTriggerEnter(Collider other)
     {
-        Debug.Log(name + "--Collide with--" + other.gameObject.name);
+         startCrashSequence(); // crash sekansý
     }
 
-     void OnTriggerEnter(Collider other)
+     void startCrashSequence()
     {
-        Debug.Log($"{this.name} **triggered by** {other.gameObject.name}");
+        crashVFX.Play(); // particle çalýþma
+        GetComponent<PlayerControls>().enabled=false; // kontrol scriptini disable etme
+        GetComponent<MeshRenderer>().enabled = false;  // meshrendererý kapatýyor player görünmez oluyor.
+        GetComponent<BoxCollider>().enabled = false;  // BoxCollider kapatýyor player görünmez oluyor.
+        Invoke("ReloadLevel", 1f); // level reloadý 1sn beklemeli
+    }
+    void ReloadLevel()
+    {
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;  // reload level metodu
+        SceneManager.LoadScene(currentSceneIndex);
     }
 }
